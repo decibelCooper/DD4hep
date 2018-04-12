@@ -23,13 +23,6 @@
 using namespace std;
 using namespace dd4hep;
 
-namespace {
-  std::string obj_type(void* ptr)  {
-    ObjectExtensions* o = (ObjectExtensions*)ptr;
-    return typeName(typeid(*o));
-  }
-}
-
 /// Default constructor
 ObjectExtensions::ObjectExtensions(const type_info& /* parent_type */)    {
   InstanceCount::increment(this);
@@ -74,7 +67,7 @@ void* ObjectExtensions::addExtension(unsigned long long int key, ExtensionEntry*
         extensions[key] = e;
         return e->object();
       }
-      except("ObjectExtensions::addExtension","Object already has an extension of type: %s.",obj_type(e->object()).c_str());
+      except("ObjectExtensions::addExtension","Object already has an extension for key %016llX.",key);
     }
     except("ObjectExtensions::addExtension","Invalid extension object for key %016llX!",key);
   }
