@@ -112,8 +112,8 @@ namespace dd4hep {
       /// Default destructor
       virtual ~Geant4FieldTrackingConstruction() {}
 
-      /// Phase action callback
-      void operator()();
+      /// Detector construction callback
+      void constructField(Geant4DetectorConstructionContext *ctxt);
 
     };
   }    // End namespace sim
@@ -285,7 +285,7 @@ Geant4FieldTrackingConstruction::Geant4FieldTrackingConstruction(Geant4Context* 
 }
 
 /// Post-track action callback
-void Geant4FieldTrackingConstruction::operator()()   {
+void Geant4FieldTrackingConstruction::constructField(Geant4DetectorConstructionContext *) {
   execute(context()->detectorDescription());
   printout( INFO, "FieldSetup", "Geant4 magnetic field tracking configured.");
   printout( INFO, "FieldSetup", "G4MagIntegratorStepper:%s G4Mag_EqRhs:%s",
